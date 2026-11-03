@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhanh Như Chớp - Hello Kitty Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FFF0F5;
+            --card-bg: #FFFFFF;
+            --primary: #FFB6C1;
+            --primary-dark: #FF69B4;
+            --secondary: #FFD1DC;
+            --accent-red: #FF4D4D;
+            --accent-red-hover: #E03B3B;
+            --text-main: #5C3D46;
+            --text-sub: #8B6B75;
+            --green: #4CAF50;
+            --border-radius: 20px;
+            --shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(#FFB6C1 1px, transparent 1px),
+                radial-gradient(#FFD1DC 1px, #FFF0F5 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            border-radius: 28px;
+            box-shadow: var(--shadow);
+            border: 4px solid #FFF;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1, h2, h3, .btn-cute, .badge {
+            font-family: 'Comfortaa', cursive;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+            width: 100%;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .bow-icon {
+            width: 48px;
+            height: 48px;
+            fill: var(--accent-red);
+            filter: drop-shadow(0 2px 4px rgba(255,77,77,0.3));
+        }
+
+        .title {
+            color: var(--primary-dark);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 0px #FFF, 4px 4px 0px var(--secondary);
+            margin: 8px 0;
+        }
+
+        .slogan {
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .kitty-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 10px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .kitty-avatar:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 15px;
+        }
+
+        .btn-cute {
+            background: var(--primary);
+            color: #FFF;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 0px var(--primary-dark);
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-cute:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0px #D81B60;
+        }
+
+        .btn-cute:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #D81B60;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text-main);
+            box-shadow: 0 4px 0px #F8BBD0;
+        }
+
+        .btn-secondary:hover {
+            background: #F8BBD0;
+            box-shadow: 0 6px 0px #F48FB1;
+        }
+
+        .btn-danger {
+            background: var(--accent-red);
+            color: #FFF;
+            box-shadow: 0 4px 0px var(--accent-red-hover);
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .audio-toggle {
+            background: #FFF;
+            border: 2px solid var(--secondary);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .audio-toggle:active {
+            transform: scale(0.9);
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 320px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .input-cute {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 2px solid var(--secondary);
+            outline: none;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .input-cute:focus {
+            border-color: var(--primary-dark);
+        }
+
+        .mode-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            margin: 16px 0;
+        }
+
+        .mode-card {
+            background: #FFF;
+            border: 3px solid var(--secondary);
+            border-radius: 20px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .mode-card:hover, .mode-card.selected {
+            border-color: var(--primary-dark);
+            background: #FFF5F8;
+            transform: translateY(-3px);
+        }
+
+        .mode-card h4 {
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+        }
+
+        .mode-card p {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .game-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFF5F8;
+            padding: 10px 16px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .timer-box {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            border-radius: 50%;
+            border: 3px solid var(--accent-red);
+            background: #FFF;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background: #FFE4E1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transition: width 0.3s;
+        }
+
+        .question-card {
+            width: 100%;
+            background: #FFF;
+            border: 2px solid var(--secondary);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .btn-option {
+            background: #FFF;
+            border: 2px solid var(--secondary);
+            padding: 14px 16px;
+            border-radius: 16px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-option:hover {
+            border-color: var(--primary-dark);
+            background: #FFF5F8;
+        }
+
+        .btn-option.correct {
+            background: #E8F5E9 !important;
+            border-color: var(--green) !important;
+            color: var(--green) !important;
+        }
+
+        .btn-option.wrong {
+            background: #FFEBEE !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .explanation-box {
+            width: 100%;
+            background: #FFF9C4;
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: #5D4037;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 16px;
+        }
+
+        .modal-card {
+            background: #FFF;
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .review-list {
+            width: 100%;
+            max-height: 350px;
+            overflow-y: auto;
+            text-align: left;
+            margin-bottom: 16px;
+            padding-right: 6px;
+        }
+
+        .review-item {
+            background: #FFF;
+            border: 1px solid var(--secondary);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #FFE4E1;
+        }
+
+        .leaderboard-table th {
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 480px) {
+            .app-container { padding: 16px; }
+            .title { font-size: 1.7rem; }
+            .mode-cards { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- TOP CONTROL BAR -->
+        <div class="top-bar">
+            <button class="audio-toggle" id="audioToggleBtn" title="Bật/Tắt Âm Thanh">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary-dark)"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+            </button>
+            <div id="highScoreBadge" class="badge" style="background:#FFF0F5; padding:6px 14px; border-radius:20px; font-weight:700; color:var(--primary-dark); font-size:0.85rem; border:1px solid var(--secondary)">
+                🏆 Kỷ kỷ lục: <span id="highScoreVal">0</span> đ
+            </div>
+        </div>
+
+        <!-- 1. SCREEN: HOME -->
+        <div id="screenHome" class="screen active">
+            <div class="logo-box">
+                <svg class="bow-icon" viewBox="0 0 100 100">
+                    <path d="M50 40 C40 20, 10 20, 20 50 C30 70, 45 55, 50 45 C55 55, 70 70, 80 50 C90 20, 60 20, 50 40 Z"/>
+                    <circle cx="50" cy="45" r="8" fill="#FFF"/>
+                </svg>
+            </div>
+            <h1 class="title">NHANH NHƯ CHỚP</h1>
+            <p class="slogan">“Nhanh mắt – Nhanh trí – Chớp lấy chiến thắng!”</p>
+            
+            <svg class="kitty-avatar" viewBox="0 0 120 120">
+                <ellipse cx="60" cy="65" rx="45" ry="35" fill="#FFF" stroke="#5C3D46" stroke-width="3"/>
+                <polygon points="25,40 15,15 40,30" fill="#FFF" stroke="#5C3D46" stroke-width="3"/>
+                <polygon points="95,40 105,15 80,30" fill="#FFF" stroke="#5C3D46" stroke-width="3"/>
+                <ellipse cx="22" cy="25" rx="6" ry="10" fill="#FF4D4D"/>
+                <ellipse cx="45" cy="62" rx="4" ry="6" fill="#5C3D46"/>
+                <ellipse cx="75" cy="62" rx="4" ry="6" fill="#5C3D46"/>
+                <ellipse cx="60" cy="68" rx="5" ry="3" fill="#FFB6C1"/>
+                <ellipse cx="30" cy="70" rx="6" ry="4" fill="#FFD1DC"/>
+                <ellipse cx="90" cy="70" rx="6" ry="4" fill="#FFD1DC"/>
+                <line x1="15" y1="60" x2="35" y2="63" stroke="#5C3D46" stroke-width="2"/>
+                <line x1="15" y1="70" x2="35" y2="68" stroke="#5C3D46" stroke-width="2"/>
+                <line x1="105" y1="60" x2="85" y2="63" stroke="#5C3D46" stroke-width="2"/>
+                <line x1="105" y1="70" x2="85" y2="68" stroke="#5C3D46" stroke-width="2"/>
+            </svg>
+
+            <div class="btn-group">
+                <button class="btn-cute" onclick="showScreen('screenRegister')">🎮 BẮT ĐẦU CHƠI</button>
+                <button class="btn-cute btn-secondary" onclick="showScreen('screenGuide')">📖 HƯỚNG DẪN</button>
+                <button class="btn-cute btn-secondary" onclick="showLeaderboard()">🏆 BẢNG XẾP HẠNG</button>
+            </div>
+        </div>
+
+        <!-- 2. SCREEN: GUIDE -->
+        <div id="screenGuide" class="screen">
+            <h2 class="title" style="font-size:1.6rem">📖 HƯỚNG DẪN CHƠI</h2>
+            <div style="text-align:left; font-size:0.95rem; line-height:1.6; color:var(--text-main); margin:16px 0; background:#FFF5F8; padding:16px; border-radius:16px; width:100%">
+                <p>🎀 <b>Luật chơi vô cùng đơn giản:</b></p>
+                <ul style="padding-left:20px; margin-top:8px">
+                    <li>Mỗi lượt chơi gồm <b>10 câu hỏi</b> ngẫu nhiên.</li>
+                    <li>Mỗi câu hỏi có <b>15 giây</b> đếm ngược để chọn đáp án.</li>
+                    <li>Chọn đúng sẽ nhận điểm tương ứng cấp độ.</li>
+                    <li>Trả lời sai hoặc hết giờ sẽ không nhận điểm.</li>
+                    <li>Bạn có thể <b>Tạm dừng</b> hoặc <b>Thoát</b> bất kỳ lúc nào.</li>
+                </ul>
+            </div>
+            <button class="btn-cute btn-secondary" onclick="showScreen('screenHome')">👈 QUAY LẠI</button>
+        </div>
+
+        <!-- 3. SCREEN: REGISTER -->
+        <div id="screenRegister" class="screen">
+            <h2 class="title" style="font-size:1.6rem">👤 THÔNG TIN NGƯỜI CHƠI</h2>
+            <div class="input-group">
+                <label for="playerName">Tên của bạn (*)</label>
+                <input type="text" id="playerName" class="input-cute" placeholder="Nhập tên hoặc biệt danh..." maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="playerSchool">Trường / Lớp (Không bắt buộc)</label>
+                <input type="text" id="playerSchool" class="input-cute" placeholder="Nhập tên trường học..." maxlength="30">
+            </div>
+            <div class="btn-group" style="margin-top:20px">
+                <button class="btn-cute" onclick="confirmRegister()">XÁC NHẬN ➡️</button>
+                <button class="btn-cute btn-secondary" onclick="showScreen('screenHome')">HUỶ BỎ</button>
+            </div>
+        </div>
+
+        <!-- 4. SCREEN: SELECT MODE -->
+        <div id="screenMode" class="screen">
+            <h2 class="title" style="font-size:1.6rem">🎯 CHỌN CHẾ ĐỘ CHƠI</h2>
+            <div class="mode-cards">
+                <div class="mode-card selected" onclick="selectMode('easy', this)">
+                    <h4>🌱 DỄ</h4>
+                    <p>100đ/câu. Đố vui nhẹ nhàng, kiến thức cơ bản.</p>
+                </div>
+                <div class="mode-card" onclick="selectMode('medium', this)">
+                    <h4>⭐ TRUNG BÌNH</h4>
+                    <p>200đ/câu. Cần suy luận & tính toán nhanh.</p>
+                </div>
+                <div class="mode-card" onclick="selectMode('hard', this)">
+                    <h4>🔥 KHÓ</h4>
+                    <p>300đ/câu. Thử thách tư duy logic cao độ.</p>
+                </div>
+                <div class="mode-card" onclick="selectMode('mix', this)">
+                    <h4>🌈 TỔNG HỢP</h4>
+                    <p>Điểm theo cấp độ. Kết hợp ngẫu nhiên 3 cấp độ.</p>
+                </div>
+            </div>
+            <button class="btn-cute" style="width:100%; max-width:320px" onclick="startGame()">VÀO TRÒ CHƠI 🚀</button>
+        </div>
+
+        <!-- 5. SCREEN: GAMEPLAY -->
+        <div id="screenGame" class="screen">
+            <div class="game-header">
+                <div style="text-align:left">
+                    <div id="displayPlayerName" style="font-weight:700; color:var(--primary-dark); font-size:0.95rem">Nhi</div>
+                    <div id="displayMode" style="font-size:0.8rem; color:var(--text-sub)">Dễ</div>
+                </div>
+                <div class="timer-box" id="timerBox">15</div>
+                <div style="text-align:right">
+                    <div style="font-size:0.8rem; color:var(--text-sub)">Điểm số</div>
+                    <div id="displayScore" style="font-weight:800; color:var(--primary-dark); font-size:1.1rem">0</div>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; width:100%; margin-bottom:8px; font-size:0.85rem; font-weight:700; color:var(--text-sub)">
+                <span id="questionNumText">Câu 1/10</span>
+                <span>Đúng: <span id="correctCountText" style="color:var(--green)">0</span> | Sai: <span id="wrongCountText" style="color:var(--accent-red)">0</span></span>
+            </div>
+
+            <div class="question-card" id="questionContent">Nội dung câu hỏi đang tải...</div>
+
+            <div class="explanation-box" id="explanationBox"></div>
+
+            <div class="options-grid" id="optionsGrid"></div>
+
+            <div style="display:flex; gap:8px; width:100%; justify-content:center; margin-top:8px">
+                <button class="btn-cute btn-secondary" style="padding:8px 14px; font-size:0.85rem" onclick="pauseGame()">⏸️ Tạm dừng</button>
+                <button class="btn-cute btn-secondary" style="padding:8px 14px; font-size:0.85rem" onclick="restartConfirm()">🔄 Chơi lại</button>
+                <button class="btn-cute btn-danger" style="padding:8px 14px; font-size:0.85rem" onclick="homeConfirm()">🏠 Trang chủ</button>
+            </div>
+        </div>
+
+        <!-- 6. SCREEN: RESULT -->
+        <div id="screenResult" class="screen">
+            <h2 class="title">🎉 HOÀN THÀNH!</h2>
+            <div style="background:#FFF5F8; border-radius:20px; padding:16px; width:100%; margin:16px 0">
+                <p id="resultFeedback" style="font-weight:700; color:var(--primary-dark); font-size:1.1rem; margin-bottom:8px"></p>
+                <p>Tổng điểm: <b id="resScore" style="color:var(--primary-dark); font-size:1.4rem">0</b></p>
+                <p style="font-size:0.9rem; margin-top:4px">Đúng: <b id="resCorrect" style="color:var(--green)">0</b>/10 câu | Chính xác: <b id="resAccuracy">0%</b></p>
+            </div>
+            <div class="btn-group">
+                <button class="btn-cute" onclick="showReviewScreen()">🔍 XEM LẠI ĐÁP ÁN</button>
+                <button class="btn-cute btn-secondary" onclick="startGame()">🔄 CHƠI LẠI</button>
+                <button class="btn-cute btn-secondary" onclick="showLeaderboard()">🏆 BẢNG XẾP HẠNG</button>
+                <button class="btn-cute btn-secondary" onclick="showScreen('screenHome')">🏠 VỀ TRANG CHỦ</button>
+            </div>
+        </div>
+
+        <!-- 7. SCREEN: REVIEW -->
+        <div id="screenReview" class="screen">
+            <h2 class="title" style="font-size:1.5rem">🔍 XEM LẠI ĐÁP ÁN</h2>
+            <div class="review-list" id="reviewList"></div>
+            <button class="btn-cute btn-secondary" onclick="showScreen('screenResult')">👈 QUAY LẠI</button>
+        </div>
+
+        <!-- 8. SCREEN: LEADERBOARD -->
+        <div id="screenLeaderboard" class="screen">
+            <h2 class="title" style="font-size:1.5rem">🏆 BẢNG XẾP HẠNG</h2>
+            <div style="width:100%; max-height:280px; overflow-y:auto; margin:12px 0">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên</th>
+                            <th>Chế độ</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+            <div style="display:flex; gap:10px; width:100%; justify-content:center">
+                <button class="btn-cute btn-secondary" onclick="showScreen('screenHome')">👈 QUAY LẠI</button>
+                <button class="btn-cute btn-danger" style="padding:10px 16px; font-size:0.9rem" onclick="clearLeaderboard()">🗑️ XÓA DỮ LIỆU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMATION / PAUSE -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-card">
+            <h3 id="modalTitle" style="color:var(--primary-dark); margin-bottom:12px">Thông báo</h3>
+            <p id="modalBody" style="color:var(--text-main); font-size:0.95rem; margin-bottom:20px"></p>
+            <div id="modalButtons" style="display:flex; gap:10px; justify-content:center"></div>
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // AUDIO SYSTEM (WEB AUDIO API)
+        // ----------------------------------------------------
+        let soundEnabled = localStorage.getItem('nhanhNhuChop_sound') !== 'false';
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now); // A3
+                osc.frequency.setValueAtTime(164.81, now + 0.15); // E3
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else if (type === 'tick') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(800, now);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            } else if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+        }
+
+        document.getElementById('audioToggleBtn').addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('nhanhNhuChop_sound', soundEnabled);
+            document.getElementById('audioToggleBtn').style.opacity = soundEnabled ? '1' : '0.4';
+            playSound('click');
+        });
+
+        // ----------------------------------------------------
+        // QUESTION BANK (100 QUESTIONS)
+        // ----------------------------------------------------
+        const questionBank = [
+            // DỄ (34 câu)
+            { id: "E01", level: "easy", question: "Con gì đập thì sống, không đập thì chết?", options: ["Con muỗi", "Con tim", "Con cua", "Con cá"], answer: 1, explanation: "Trái tim đập để duy trì sự sống!" },
+            { id: "E02", level: "easy", question: "Cái gì tay trái cầm được mà tay phải cầm không được?", options: ["Cổ tay phải", "Cổ tay trái", "Cây bút", "Cái chén"], answer: 0, explanation: "Tay phải không thể tự cầm cổ tay của chính nó!" },
+            { id: "E03", level: "easy", question: "Tháng nào trong năm có 28 ngày?", options: ["Tháng 2", "Tháng 1", "Tất cả các tháng", "Tháng 12"], answer: 2, explanation: "Tháng nào cũng có ít nhất 28 ngày!" },
+            { id: "E04", level: "easy", question: "Bánh gì không ăn được?", options: ["Bánh xe", "Bánh mì", "Bánh bao", "Bánh bò"], answer: 0, explanation: "Bánh xe dùng để di chuyển." },
+            { id: "E05", level: "easy", question: "Con gì không có xương sống mà vẫn đứng được?", options: ["Con rắn", "Con giun", "Con cờ", "Con ốc"], answer: 2, explanation: "Con cờ trong bàn cờ!" },
+            { id: "E06", level: "easy", question: "Nắng lửa mưa dầu, tôi đâu có sợ; Chỉ sợ người quen, lỡ tay mở nắp. Là cái gì?", options: ["Cái ô", "Bình giữ nhiệt", "Cái chai", "Hộp quà"], answer: 0, explanation: "Cái ô/dù bị gập lại khi người ta đóng nắp/gập ô." },
+            { id: "E07", level: "easy", question: "Quả gì có mắt mà không có tai?", options: ["Quả dứa (thơm)", "Quả dừa", "Quả na", "Quả bưởi"], answer: 0, explanation: "Quả dứa có nhiều 'mắt' dứa." },
+            { id: "E08", level: "easy", question: "Cái gì càng kéo càng ngắn?", options: ["Điếu thuốc", "Sợi dây", "Con đường", "Cái quần"], answer: 0, explanation: "Hút thuốc (kéo hơi) làm điếu thuốc ngắn lại." },
+            { id: "E09", level: "easy", question: "Quần rộng nhất là quần gì?", options: ["Quần bò", "Quần đảo", "Quần thun", "Quần tây"], answer: 1, explanation: "Quần đảo là tập hợp nhiều đảo lớn nhỏ!" },
+            { id: "E10", level: "easy", question: "Cái gì người mua biết, người bán biết, người dùng không bao giờ biết?", options: ["Cái quan tài", "Gối ôm", "Mặt nạ", "Kính râm"], answer: 0, explanation: "Người dùng quan tài là người đã khuất." },
+            { id: "E11", level: "easy", question: "Con đường dài nhất là đường nào?", options: ["Đường đời", "Đường cao tốc", "Đường Xích Đạo", "Đường sắt"], answer: 0, explanation: "Đường đời kéo dài suốt cuộc đời con người." },
+            { id: "E12", level: "easy", question: "Mặt trời mọc ở hướng nào?", options: ["Đông", "Tây", "Nam", "Bắc"], answer: 0, explanation: "Trái Đất quay từ Tây sang Đông nên Mặt Trời mọc ở hướng Đông." },
+            { id: "E13", level: "easy", question: "Hạ Long thuộc tỉnh nào của Việt Nam?", options: ["Quảng Ninh", "Hải Phòng", "Nam Định", "Thanh Hóa"], answer: 0, explanation: "Vịnh Hạ Long thuộc tỉnh Quảng Ninh." },
+            { id: "E14", level: "easy", question: "1 năm có bao nhiêu quý?", options: ["4 quý", "3 quý", "6 quý", "2 quý"], answer: 0, explanation: "Một năm có 12 tháng, chia làm 4 quý (mỗi quý 3 tháng)." },
+            { id: "E15", level: "easy", question: "Cái gì bị chặt không đứt, bẻ không gãy, phơi không khô?", options: ["Dòng nước", "Sợi dây", "Khúc gỗ", "Thanh sắt"], answer: 0, explanation: "Nước có tính chất lỏng tự nhiên." },
+            { id: "E16", level: "easy", question: "Con mèo nào không bắt chuột?", options: ["Doraemon", "Mèo tam thể", "Mèo mướp", "Mèo Rừng"], answer: 0, explanation: "Doraemon sợ chuột!" },
+            { id: "E17", level: "easy", question: "Con chó bò bằng mấy chân?", options: ["4 chân", "2 chân", "không bò", "3 chân"], answer: 2, explanation: "Con chó đi chứ không bò (trừ khi là con chó bò)." },
+            { id: "E18", level: "easy", question: "Bệnh gì bác sĩ bó tay?", options: ["Bệnh gãy tay", "Bệnh cảm", "Bệnh đau mắt", "Bệnh ho"], answer: 0, explanation: "Gãy tay thì bác sĩ phải bó tay lại!" },
+            { id: "E19", level: "easy", question: "Loại nước nào không có phép uống?", options: ["Nước nước (quốc gia)", "Nước sông", "Nước máy", "Nước cạn"], answer: 0, explanation: "Nước theo nghĩa là quốc gia/lãnh thổ." },
+            { id: "E20", level: "easy", question: "Hoa gì không bao giờ nở?", options: ["Hoa đồng tiền", "Hoa giấy", "Hoa tay", "Hoa hòe"], answer: 2, explanation: "Hoa tay là đường vân trên ngón tay." },
+            { id: "E21", level: "easy", question: "Cái gì càng mua càng mất tiền?", options: ["Mọi thứ", "Cái nhà", "Cái xe", "Đồ ăn"], answer: 0, explanation: "Mua cái gì cũng tốn tiền!" },
+            { id: "E22", level: "easy", question: "Cái gì đi thì nằm, đứng thì nằm, nhưng nằm lại đứng?", options: ["Bàn chân", "Bàn tay", "Cái lưng", "Cái đầu"], answer: 0, explanation: "Khi nằm thì lòng bàn chân đứng vuông góc." },
+            { id: "E23", level: "easy", question: "Lịch nào dài nhất?", options: ["Lịch sử", "Lịch treo tường", "Lịch vạn niên", "Lịch để bàn"], answer: 0, explanation: "Lịch sử trải dài qua muôn thế hệ." },
+            { id: "E24", level: "easy", question: "Con gì sinh ra đã mang tiếng?", options: ["Con ve", "Con gà", "Con chó", "Con chim"], answer: 0, explanation: "Ve kêu tạo ra tiếng vang lớn." },
+            { id: "E25", level: "easy", question: "Sông nào không có nước?", options: ["Sông trên bản đồ", "Sông Hồng", "Sông Mê Kông", "Sông Đáy"], answer: 0, explanation: "Sông vẽ trên bản đồ giấy!" },
+            { id: "E26", level: "easy", question: "Cái gì luôn đến mà không bao giờ tới?", options: ["Ngày mai", "Hôm nay", "Hôm qua", "Tương lai"], answer: 0, explanation: "Khi đến nơi thì nó đã thành 'hôm nay'." },
+            { id: "E27", level: "easy", question: "Việt Nam có bao nhiêu tỉnh thành giáp biển?", options: ["28 tỉnh thành", "63 tỉnh thành", "10 tỉnh thành", "15 tỉnh thành"], answer: 0, explanation: "Việt Nam có 28 tỉnh, thành phố giáp biển." },
+            { id: "E28", level: "easy", question: "Tổ quốc Việt Nam nằm ở châu lục nào?", options: ["Châu Á", "Châu Âu", "Châu Mỹ", "Châu Phi"], answer: 0, explanation: "Việt Nam nằm ở khu vực Đông Nam Á, Châu Á." },
+            { id: "E29", level: "easy", question: "Số nhỏ nhất có hai chữ số là số nào?", options: ["10", "01", "11", "00"], answer: 0, explanation: "10 là số nguyên dương nhỏ nhất có 2 chữ số." },
+            { id: "E30", level: "easy", question: "Tam giác có mấy cạnh?", options: ["3 cạnh", "4 cạnh", "5 cạnh", "2 cạnh"], answer: 0, explanation: "Tam có nghĩa là 3." },
+            { id: "E31", level: "easy", question: "Động vật nào được coi là chúa sơn lâm?", options: ["Hổ (Cọp)", "Sư tử", "Báo", "Voi"], answer: 0, explanation: "Hổ được mệnh danh là chúa sơn lâm." },
+            { id: "E32", level: "easy", question: "Loại quả nào có hạt nằm ở bên ngoài?", options: ["Dâu tây", "Táo", "Cam", "Xoài"], answer: 0, explanation: "Quả dâu tây có các hạt nhỏ nằm ngoài vỏ." },
+            { id: "E33", level: "easy", question: "Màu nào kết hợp giữa Đỏ và Vàng?", options: ["Màu cam", "Màu tím", "Màu xanh lá", "Màu hồng"], answer: 0, explanation: "Pha đỏ và vàng sẽ ra màu cam." },
+            { id: "E34", level: "easy", question: "Thủ đô của Việt Nam là gì?", options: ["Hà Nội", "TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ"], answer: 0, explanation: "Hà Nội là thủ đô của nước CHXHCN Việt Nam." },
+
+            // TRUNG BÌNH (33 câu)
+            { id: "M01", level: "medium", question: "Một người đi vào rừng sâu gặp một con hổ dữ, trên tay cầm súng có 1 viên đạn. Hỏi người đó làm sao để không bị ăn thịt?", options: ["Bắn chết hổ", "Bắn lên trời", "Quăng súng bỏ chạy", "Nhắm mắt lại vì đó là giấc mơ"], answer: 0, explanation: "Chỉ có 1 viên đạn thì bắn trúng hổ là xong!" },
+            { id: "M02", level: "medium", question: "Có 3 đứa trẻ đứng chung dưới một chiếc ô nhỏ nhưng không ai bị ướt. Tại sao?", options: ["Trời không mưa", "Ô quá to", "Mặc áo mưa", "Đứng trong nhà"], answer: 0, explanation: "Vì trời không có mưa!" },
+            { id: "M03", level: "medium", question: "Từ nào trong tiếng Việt có 9 chữ H?", options: ["Chính", "Hàng", "Chín h", "Ngân hàng"], answer: 0, explanation: "Từ 'Chính' = Chín chữ H." },
+            { id: "M04", level: "medium", question: "Cái gì mất đi rồi mới thấy nhớ?", options: ["Sức khỏe / Thời gian", "Tiền bạc", "Chiếc xe", "Cái áo"], answer: 0, explanation: "Sức khỏe và thời gian khi mất đi mới nhận ra giá trị." },
+            { id: "M05", level: "medium", question: "Nếu 3 con mèo bắt 3 con chuột trong 3 phút, thì cần bao nhiêu con mèo để bắt 100 con chuột trong 100 phút?", options: ["3 con", "100 con", "33 con", "1 con"], answer: 0, explanation: "Vẫn là 3 con mèo đó, vì tốc độ trung bình là 3 con bắt 1 con/phút." },
+            { id: "M06", level: "medium", question: "Ngọn núi nào cao nhất thế giới trước khi đỉnh Everest được phát hiện?", options: ["Đỉnh Everest", "Núi Phú Sĩ", "K2", "Kangchenjunga"], answer: 0, explanation: "Everest vẫn là núi cao nhất, chỉ là con người chưa phát hiện ra thôi!" },
+            { id: "M07", level: "medium", question: "Nơi nào có đường xá nhưng không có xe, có nhà cửa nhưng không có người?", options: ["Bản đồ", "Thành phố ma", "Trần nhà", "Sa mạc"], answer: 0, explanation: "Tranh vẽ hoặc bản đồ địa lý." },
+            { id: "M08", level: "medium", question: "Vua gọi vợ bằng gì?", options: ["Hoàng hậu", "Ái khánh", "Phu nhân", "Bằng miệng"], answer: 3, explanation: "Gọi bằng miệng chứ bằng gì!" },
+            { id: "M09", level: "medium", question: "Nước nào giáp với Việt Nam ở phía Tây?", options: ["Lào và Campuchia", "Trung Quốc", "Thái Lan", "Myanmar"], answer: 0, explanation: "Phía Tây Việt Nam giáp Lào và Campuchia." },
+            { id: "M10", level: "medium", question: "Hành tinh nào gần Mặt Trời nhất?", options: ["Sao Thủy", "Sao Kim", "Trái Đất", "Sao Hỏa"], answer: 0, explanation: "Sao Thủy (Mercury) là hành tinh gần Mặt Trời nhất." },
+            { id: "M11", level: "medium", question: "Ai là người sáng lập ra tập đoàn Microsoft?", options: ["Bill Gates", "Steve Jobs", "Mark Zuckerberg", "Elon Musk"], answer: 0, explanation: "Bill Gates cùng Paul Allen thành lập Microsoft năm 1975." },
+            { id: "M12", level: "medium", question: "Tác phẩm 'Tắt đèn' là của ai?", options: ["Ngo Tatsu", "Nghô Tất Tố", "Nam Cao", "Xuyên Thấu"], answer: 1, explanation: "Tiểu thuyết Tắt đèn do Ngô Tất Tố sáng tác." },
+            { id: "M13", level: "medium", question: "Số tự nhiên nhỏ nhất là số mấy?", options: ["0", "1", "-1", "Không có"], answer: 0, explanation: "Số 0 là số tự nhiên nhỏ nhất trong tập N." },
+            { id: "M14", level: "medium", question: "Trong 1 giờ kim phút quay được bao nhiêu độ?", options: ["360 độ", "180 độ", "90 độ", "720 độ"], answer: 0, explanation: "Kim phút đi đúng 1 vòng trọn vẹn 360 độ." },
+            { id: "M15", level: "medium", question: "Chất khí nào chiếm tỷ lệ lớn nhất trong không khí Trái Đất?", options: ["Nitơ (N2)", "Oxy (O2)", "Cacbonic (CO2)", "Heli"], answer: 0, explanation: "Nitơ chiếm khoảng 78% thể tích khí quyển." },
+            { id: "M16", level: "medium", question: "Cơ quan nào trong cơ thể con người lọc máu chính?", options: ["Thận", "Gan", "Tim", "Phổi"], answer: 0, explanation: "Thận đóng vai trò chính trong việc lọc chất thải khỏi máu." },
+            { id: "M17", level: "medium", question: "Bác Hồ đọc Bản Tuyên ngôn Độc lập tại đâu?", options: ["Quảng trường Ba Đình", "Bến Nhà Rồng", "Huế", "Tân Trào"], answer: 0, explanation: "Tại Quảng trường Ba Đình, Hà Nội ngày 2/9/1945." },
+            { id: "M18", level: "medium", question: "Số pi (π) thường được lấy giá trị xấp xỉ là bao nhiêu?", options: ["3.14", "3.12", "3.16", "3.18"], answer: 0, explanation: "Số Pi xấp xỉ 3.14159..." },
+            { id: "M19", level: "medium", question: "Quần đảo Hoàng Sa thuộc tỉnh/thành phố nào của Việt Nam?", options: ["Đà Nẵng", "Khánh Hòa", "Quảng Nam", "Bình Thuận"], answer: 0, explanation: "Huyện đảo Hoàng Sa thuộc TP. Đà Nẵng." },
+            { id: "M20", level: "medium", question: "Đảo lớn nhất Việt Nam là đảo nào?", options: ["Phú Quốc", "Cát Bà", "Côn Đảo", "Lý Sơn"], answer: 0, explanation: "Phú Quốc (Kiên Giang) là hòn đảo lớn nhất." },
+            { id: "M21", level: "medium", question: "Đồng tiền chung của Liên minh Châu Âu (EU) là gì?", options: ["Euro", "USD", "Bảng Anh", "Yên"], answer: 0, explanation: "Đồng Euro (€) được sử dụng chính thức ở nhiều nước EU." },
+            { id: "M22", level: "medium", question: "Trong trò chơi cờ vua, quân nào chỉ di chuyển chéo?", options: ["Tượng", "Xe", "Mã", "Hậu"], answer: 0, explanation: "Quân Tượng di chuyển theo đường chéo." },
+            { id: "M23", level: "medium", question: "Bộ phim hoạt hình 'Tom and Jerry' do hãng nào sản xuất ban đầu?", options: ["MGM", "Disney", "Pixar", "DreamWorks"], answer: 0, explanation: "Metro-Goldwyn-Mayer (MGM) sản xuất Tom & Jerry từ năm 1940." },
+            { id: "M24", level: "medium", question: "Một tam giác vuông có hai cạnh góc vuông lần lượt là 3cm và 4cm. Cạnh huyền bằng bao nhiêu?", options: ["5cm", "6cm", "7cm", "8cm"], answer: 0, explanation: "Theo định lý Pytago: √(3² + 4²) = 5cm." },
+            { id: "M25", level: "medium", question: "Vitamin nào có nhiều nhất trong quả cam?", options: ["Vitamin C", "Vitamin A", "Vitamin D", "Vitamin B12"], answer: 0, explanation: "Cam nổi tiếng là nguồn cung cấp Vitamin C phong phú." },
+            { id: "M26", level: "medium", question: "Kim loại nào dẫn điện tốt nhất?", options: ["Bạc (Ag)", "Đồng (Cu)", "Vàng (Au)", "Nhôm (Al)"], answer: 0, explanation: "Bạc có tính dẫn điện tốt nhất trong các kim loại." },
+            { id: "M27", level: "medium", question: "Tác giả của tác phẩm 'Truyện Kiều' là ai?", options: ["Nguyễn Du", "Nguyễn Trãi", "Hồ Xuân Hương", "Đoàn Thị Điểm"], answer: 0, explanation: "Đại thi hào Nguyễn Du sáng tác Truyện Kiều." },
+            { id: "M28", level: "medium", question: "Đất nước nào nổi tiếng với tháp Eiffel?", options: ["Pháp", "Ý", "Anh", "Đức"], answer: 0, explanation: "Tháp Eiffel nằm tại Paris, Pháp." },
+            { id: "M29", level: "medium", question: "Năm nhuận theo lịch Dương có bao nhiêu ngày?", options: ["366 ngày", "365 ngày", "364 ngày", "367 ngày"], answer: 0, explanation: "Năm nhuận tháng 2 có 29 ngày, tổng là 366 ngày." },
+            { id: "M30", level: "medium", question: "Loại động vật nào có thể sống cả trên bơi lẫn trên bộc (lưỡng cư)?", options: ["Ếch", "Cá chép", "Rắn cạn", "Chim én"], answer: 0, explanation: "Ếch là đại diện điển hình của lớp Lưỡng cư." },
+            { id: "M31", level: "medium", question: "Lễ hội Đền Hùng được tổ chức vào ngày nào Âm lịch?", options: ["Mùng 10 tháng 3", "Mùng 1 tháng 1", "Rằm tháng 8", "Mùng 5 tháng 5"], answer: 0, explanation: "Ngày giỗ tổ Hùng Vương là 10/3 Âm lịch." },
+            { id: "M32", level: "medium", question: "Vận tốc ánh sáng trong chân không là bao nhiêu?", options: ["~300.000 km/s", "~150.000 km/s", "~30.000 km/s", "~1.000.000 km/s"], answer: 0, explanation: "Ánh sáng đi được khoảng 300.000 km trong 1 giây." },
+            { id: "M33", level: "medium", question: "World Cup được tổ chức mấy năm một lần?", options: ["4 năm", "2 năm", "3 năm", "5 năm"], answer: 0, explanation: "Giải vô địch bóng đá thế giới tổ chức định kỳ 4 năm/lần." },
+
+            // KHÓ (33 câu)
+            { id: "H01", level: "hard", question: "Một người đứng trên cầu nhảy xuống sông. Khi rơi xuống nửa chừng người đó thấy gì?", options: ["Gió thổi", "Thấy đáy sông", "Thấy rơi xuống tiếp", "Thấy sợ"], answer: 2, explanation: "Rơi nửa chừng thì tiếp tục rơi xuống đoạn còn lại!" },
+            { id: "H02", level: "hard", question: "Cái gì có 2 đầu, 1 thân, nhưng không có tay chân, chạy khắp xóm làng?", options: ["Con đường", "Con sông", "Chiếc xe", "Cây tre"], answer: 0, explanation: "Con đường có 2 đầu đường, thân đường." },
+            { id: "H03", level: "hard", question: "Nối 9 điểm tạo thành hình vuông bằng 4 nét vẽ liên tục mà không nhấc bút?", options: ["Bài toán Euler classic", "Không vẽ được", "Vẽ hình tròn", "Cần 5 nét"], answer: 0, explanation: "Vẽ kéo dài nét ra ngoài phạm vi 9 điểm!" },
+            { id: "H04", level: "hard", question: "Ai là vị vua cuối cùng của triều đại phong kiến Việt Nam?", options: ["Bảo Đại", "Khải Định", "Minh Mạng", "Tự Đức"], answer: 0, explanation: "Vua Bảo Đại thoái vị năm 1945." },
+            { id: "H05", level: "hard", question: "Biển nào nông nhất thế giới?", options: ["Biển Azov", "Biển Đen", "Biển Đỏ", "Biển Baltik"], answer: 0, explanation: "Biển Azov (châu Âu) có độ sâu trung bình chỉ khoảng 7m." },
+            { id: "H06", level: "hard", question: "Quốc gia nào có diện tích lớn nhất thế giới?", options: ["Nga", "Canada", "Mỹ", "Trung Quốc"], answer: 0, explanation: "Liên bang Nga có diện tích hơn 17 triệu km²." },
+            { id: "H07", level: "hard", question: "Nguyên tố hóa học nào có ký hiệu là 'Au'?", options: ["Vàng", "Bạc", "Đồng", "Sắt"], answer: 0, explanation: "Au đến từ từ tiếng Latin 'Aurum' nghĩa là Vàng." },
+            { id: "H08", level: "hard", question: "Ai là tác giả của thuyết Tương đối?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"], answer: 0, explanation: "Albert Einstein công bố thuyết tương đối hẹp & tổng quát." },
+            { id: "H09", level: "hard", question: "Dãy núi nào được coi là ranh giới tự nhiên giữa châu Á và châu Âu?", options: ["Dãy Ural", "Dãy Himalaya", "Dãy Alps", "Dãy Andes"], answer: 0, explanation: "Dãy núi Ural phân chia hai lục địa." },
+            { id: "H10", level: "hard", question: "Ai là người đầu tiên bay vào vũ trụ?", options: ["Yuri Gagarin", "Neil Armstrong", "Pham Tuan", "Buzz Aldrin"], answer: 0, explanation: "Yuri Gagarin (Liên Xô) bay vào vũ trụ năm 1961." },
+            { id: "H11", level: "hard", question: "Trận chiến trên sông Bạch Đằng năm 938 do ai chỉ huy?", options: ["Ngô Quyền", "Lê Hoàn", "Trần Hưng Đạo", "Lý Thường Kiệt"], answer: 0, explanation: "Ngô Quyền đánh tan quân Nam Hán năm 938." },
+            { id: "H12", level: "hard", question: "Đơn vị đo cường độ dòng điện là gì?", options: ["Ampe (A)", "Volt (V)", "Ohm (Ω)", "Watt (W)"], answer: 0, explanation: "Ampe là đơn vị đo cường độ dòng điện trong hệ SI." },
+            { id: "H13", level: "hard", question: "Trong hóa học, pH = 7 thể hiện dung dịch có tính chất gì?", options: ["Trung tính", "Axit", "Bazơ", "Muối"], answer: 0, explanation: "pH = 7 là dung dịch trung tính (như nước tinh khiết)." },
+            { id: "H14", level: "hard", question: "Tác phẩm 'Bình Ngô đại cáo' được sáng tác sau chiến thắng nào?", options: ["Khởi nghĩa Lam Sơn", "Trận Ngọc Hồi - Đống Đa", "Trận Bạch Đằng", "Trận Chi Lăng"], answer: 0, explanation: "Nguyễn Trãi thay lời Lê Lợi tuyên bố độc lập sau khởi nghĩa Lam Sơn." },
+            { id: "H15", level: "hard", question: "Ngôn ngữ lập trình nào được tạo ra bởi Brendan Eich vào năm 1995?", options: ["JavaScript", "Python", "Java", "C++"], answer: 0, explanation: "Brendan Eich thiết kế JavaScript chỉ trong 10 ngày." },
+            { id: "H16", level: "hard", question: "Cơ quan nào sản sinh ra hormone Insulin?", options: ["Tụy (Tuyến tụy)", "Gan", "Thận", "Tuyến giáp"], answer: 0, explanation: "Các tế bào beta của tuyến tụy tiết ra Insulin." },
+            { id: "H17", level: "hard", question: "Nước nào sở hữu nhiều di sản thế giới UNESCO nhất (tính đến hiện tại)?", options: ["Ý (Italy)", "Trung Quốc", "Tây Ban Nha", "Pháp"], answer: 0, explanation: "Ý là quốc gia dẫn đầu về số di sản UNESCO." },
+            { id: "H18", level: "hard", question: "Định lý Fermat lớn đã tồn tại không có lời giải trong bao nhiêu năm?", options: ["Hơn 350 năm", "100 năm", "50 năm", "200 năm"], answer: 0, explanation: "Andrew Wiles chứng minh hoàn tất vào năm 1994 sau 358 năm." },
+            { id: "H19", level: "hard", question: "Thành phố nào được gọi là 'Thành phố Cảng' nổi tiếng ở miền Bắc Việt Nam?", options: ["Hải Phòng", "Quảng Ninh", "Nam Định", "Thái Bình"], answer: 0, explanation: "Hải Phòng còn gọi là Thành phố Hoa Phượng Đỏ / Thành phố Cảng." },
+            { id: "H20", level: "hard", question: "Ai là nữ vương đầu tiên trong lịch sử Việt Nam?", options: ["Hai Bà Trưng", "Bà Triệu", "Yên Bình Vương", "Nguyên phi Ỷ Lan"], answer: 0, explanation: "Trưng Trác cùng Trưng Nhị xưng vương năm 40 n.đ.c." },
+            { id: "H21", level: "hard", question: "Nguyên tố có độ âm điện lớn nhất trong bảng tuần hoàn là gì?", options: ["Clo (F)", "Clo (Cl)", "Oxy (O)", "Nitơ (N)"], answer: 0, explanation: "Clo (Fluorine - F) có độ âm điện 3.98 lớn nhất." },
+            { id: "H22", level: "hard", question: "Vệ tinh tự nhiên duy nhất của Trái Đất là gì?", options: ["Mặt Trăng", "Mặt Trời", "Sao Kim", "Titan"], answer: 0, explanation: "Mặt Trăng là vệ tinh tự nhiên duy nhất." },
+            { id: "H23", level: "hard", question: "Đỉnh núi cao nhất châu Phi tên là gì?", options: ["Kilimanjaro", "Everest", "Elbrus", "Aconcagua"], answer: 0, explanation: "Mount Kilimanjaro ở Tanzania cao 5.895m." },
+            { id: "H24", level: "hard", question: "Ai đã phát minh ra kính thiên văn dùng để quan sát vũ trụ đầu tiên?", options: ["Galileo Galilei", "Newton", "Kepler", "Copernicus"], answer: 0, explanation: "Galileo cải tiến và hướng kính thiên văn lên bầu trời đêm năm 1609." },
+            { id: "H25", level: "hard", question: "Nước nào có đường bờ biển dài nhất thế giới?", options: ["Canada", "Indonesia", "Nga", "Úc"], answer: 0, explanation: "Canada có đường bờ biển dài nhất hơn 202.000 km." },
+            { id: "H26", level: "hard", question: "Phản ứng phân hạch hạt nhân thường sử dụng đồng vị nào?", options: ["Uranium-235", "Uranium-238", "Carbon-14", "Hydrogen-2"], answer: 0, explanation: "U-235 dễ bị phân hạch khi hấp thụ nơtron chậm." },
+            { id: "H27", level: "hard", question: "Bộ luật đầu tiên của nước ta có tên là gì?", options: ["Bộ luật Hình thư", "Luật Hồng Đức", "Luật Gia Long", "Hiến pháp"], answer: 0, explanation: "Bộ Hình thư thời nhà Lý (1042)." },
+            { id: "H28", level: "hard", question: "Khí độc Carbon Monoxide có công thức hóa học là gì?", options: ["CO", "CO2", "SO2", "NO2"], answer: 0, explanation: "CO là khí không màu không mùi cực độc." },
+            { id: "H29", level: "hard", question: "Ai sáng tạo ra bảng chữ cái Tiếng Việt (Chữ Quốc Ngữ)?", options: ["Alexandre de Rhodes", "Nguyễn Du", "Trương Vĩnh Ký", "Chu Văn An"], answer: 0, explanation: "Alexandre de Rhodes đóng góp quan trọng nhất trong việc hệ thống hóa." },
+            { id: "H30", level: "hard", question: "Sông nào dài nhất thế giới?", options: ["Sông Nile", "Sông Amazon", "Sông Trường Giang", "Sông Mê Kông"], answer: 0, explanation: "Sông Nile (~6.650 km) được công nhận dài nhất." },
+            { id: "H31", level: "hard", question: "Đảo Côn Đảo thuộc tỉnh nào?", options: ["Bà Rịa - Vũng Tàu", "Kiên Giang", "Cà Mau", "Bình Thuận"], answer: 0, explanation: "Huyện đảo Côn Đảo thuộc Bà Rịa - Vũng Tàu." },
+            { id: "H32", level: "hard", question: "Ai được xưng là 'Vạn thế sư biểu' của Việt Nam?", options: ["Chu Văn An", "Nguyễn Trãi", "Lê Quý Đôn", "Mạc Đĩnh Chi"], answer: 0, explanation: "Danh nhân Chu Văn An được tôn vinh là người thầy của muôn đời." },
+            { id: "H33", level: "hard", question: "Một byte bằng bao nhiêu bit?", options: ["8 bit", "10 bit", "16 bit", "1024 bit"], answer: 0, explanation: "1 Byte = 8 bits trong tin học cơ bản." }
+        ];
+
+        // ----------------------------------------------------
+        // GAME STATE MANAGEMENT
+        // ----------------------------------------------------
+        let currentScreen = 'screenHome';
+        let player = { name: '', school: '' };
+        let selectedMode = 'easy'; // easy, medium, hard, mix
+        let currentGameQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let correctAnswersCount = 0;
+        let wrongAnswersCount = 0;
+        let timerInterval = null;
+        let timeLeft = 15;
+        let isPaused = false;
+        let playerHistory = [];
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            updateHighScoreDisplay();
+            const savedSound = localStorage.getItem('nhanhNhuChop_sound');
+            if (savedSound === 'false') {
+                document.getElementById('audioToggleBtn').style.opacity = '0.4';
+            }
+        });
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            currentScreen = screenId;
+        }
+
+        function updateHighScoreDisplay() {
+            const lb = JSON.parse(localStorage.getItem('nhanhNhuChop_lb') || '[]');
+            const topScore = lb.length > 0 ? Math.max(...lb.map(item => item.score)) : 0;
+            document.getElementById('highScoreVal').innerText = topScore;
+        }
+
+        function confirmRegister() {
+            const nameInput = document.getElementById('playerName').value.trim();
+            if (!nameInput) {
+                showModal("Lỗi thông tin", "Vui lòng nhập tên hoặc biệt danh của bạn để bắt đầu!", [
+                    { text: "Đã hiểu", class: "btn-cute", onclick: "closeModal()" }
+                ]);
+                return;
+            }
+            player.name = nameInput;
+            player.school = document.getElementById('playerSchool').value.trim();
+            playSound('click');
+            showScreen('screenMode');
+        }
+
+        function selectMode(mode, element) {
+            selectedMode = mode;
+            document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            playSound('click');
+        }
+
+        function startGame() {
+            playSound('click');
+            // Filter questions by mode
+            let pool = [];
+            if (selectedMode === 'easy') {
+                pool = questionBank.filter(q => q.level === 'easy');
+            } else if (selectedMode === 'medium') {
+                pool = questionBank.filter(q => q.level === 'medium');
+            } else if (selectedMode === 'hard') {
+                pool = questionBank.filter(q => q.level === 'hard');
+            } else {
+                pool = [...questionBank];
+            }
+
+            // Shuffle and pick 10
+            pool.sort(() => Math.random() - 0.5);
+            currentGameQuestions = pool.slice(0, 10).map(q => ({
+                ...q,
+                userAnswer: null
+            }));
+
+            currentQIndex = 0;
+            score = 0;
+            correctAnswersCount = 0;
+            wrongAnswersCount = 0;
+
+            // Setup display
+            document.getElementById('displayPlayerName').innerText = player.name;
+            const modeNames = { easy: 'Dễ', medium: 'Trung bình', hard: 'Khó', mix: 'Thử thách tổng hợp' };
+            document.getElementById('displayMode').innerText = modeNames[selectedMode];
+
+            showScreen('screenGame');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQIndex >= 10) {
+                endGame();
+                return;
+            }
+
+            const q = currentGameQuestions[currentQIndex];
+            document.getElementById('questionNumText').innerText = `Câu ${currentQIndex + 1}/10`;
+            document.getElementById('displayScore').innerText = score;
+            document.getElementById('correctCountText').innerText = correctAnswersCount;
+            document.getElementById('wrongCountText').innerText = wrongAnswersCount;
+            document.getElementById('progressBar').style.width = `${((currentQIndex + 1) / 10) * 100}%`;
+
+            document.getElementById('questionContent').innerText = q.question;
+            document.getElementById('explanationBox').style.display = 'none';
+
+            // Options
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+            const labels = ['A', 'B', 'C', 'D'];
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerHTML = `<b style="margin-right:8px; color:var(--primary-dark)">${labels[idx]}.</b> ${opt}`;
+                btn.onclick = () => handleAnswer(idx);
+                grid.appendChild(btn);
+            });
+
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 15;
+            document.getElementById('timerBox').innerText = timeLeft;
+            
+            timerInterval = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    document.getElementById('timerBox').innerText = timeLeft;
+                    if (timeLeft <= 3 && timeLeft > 0) playSound('tick');
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        handleAnswer(-1); // Time out
+                    }
+                }
+            }, 1000);
+        }
+
+        function handleAnswer(selectedIndex) {
+            clearInterval(timerInterval);
+            const q = currentGameQuestions[currentQIndex];
+            q.userAnswer = selectedIndex;
+
+            const grid = document.getElementById('optionsGrid');
+            const buttons = grid.querySelectorAll('.btn-option');
+            buttons.forEach(b => b.style.pointerEvents = 'none'); // Disable clicking
+
+            let points = 0;
+            if (q.level === 'easy') points = 100;
+            else if (q.level === 'medium') points = 200;
+            else if (q.level === 'hard') points = 300;
+
+            if (selectedIndex === q.answer) {
+                playSound('correct');
+                score += points;
+                correctAnswersCount++;
+                if (selectedIndex >= 0) buttons[selectedIndex].classList.add('correct');
+            } else {
+                playSound('wrong');
+                wrongAnswersCount++;
+                if (selectedIndex >= 0) buttons[selectedIndex].classList.add('wrong');
+                buttons[q.answer].classList.add('correct');
+            }
+
+            // Show explanation
+            const expBox = document.getElementById('explanationBox');
+            expBox.innerText = `💡 Giải thích: ${q.explanation}`;
+            expBox.style.display = 'block';
+
+            setTimeout(() => {
+                currentQIndex++;
+                loadQuestion();
+            }, 1800);
+        }
+
+        function pauseGame() {
+            isPaused = true;
+            playSound('click');
+            showModal("⏸️ TẠM DỪNG", "Trò chơi đang được tạm dừng. Bạn muốn tiếp tục?", [
+                { text: "TIẾP TỤC CHƠI", class: "btn-cute", onclick: "resumeGame()" }
+            ]);
+        }
+
+        function resumeGame() {
+            isPaused = false;
+            closeModal();
+            playSound('click');
+        }
+
+        function restartConfirm() {
+            isPaused = true;
+            playSound('click');
+            showModal("🔄 CHƠI LẠI?", "Bạn có chắc chắn muốn chơi lại từ đầu không? Điểm lượt này sẽ bị xóa.", [
+                { text: "ĐỒNG Ý", class: "btn-cute btn-danger", onclick: "closeModal(); startGame(); isPaused=false;" },
+                { text: "HỦY", class: "btn-cute btn-secondary", onclick: "resumeGame()" }
+            ]);
+        }
+
+        function homeConfirm() {
+            isPaused = true;
+            playSound('click');
+            showModal("🏠 THOÁT VỀ TRANG CHỦ?", "Bạn có chắc chắn muốn thoát về trang chủ không? Tiến trình lượt này sẽ không được lưu.", [
+                { text: "THOÁT", class: "btn-cute btn-danger", onclick: "closeModal(); clearInterval(timerInterval); isPaused=false; showScreen('screenHome');" },
+                { text: "TIẾP TỤC CHƠI", class: "btn-cute btn-secondary", onclick: "resumeGame()" }
+            ]);
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            
+            // Save to LocalStorage
+            const record = {
+                name: player.name,
+                school: player.school,
+                mode: selectedMode,
+                score: score,
+                correct: correctAnswersCount,
+                time: new Date().toLocaleString()
+            };
+
+            let lb = JSON.parse(localStorage.getItem('nhanhNhuChop_lb') || '[]');
+            lb.push(record);
+            lb.sort((a, b) => b.score - a.score || b.correct - a.correct);
+            localStorage.setItem('nhanhNhuChop_lb', JSON.stringify(lb));
+
+            updateHighScoreDisplay();
+
+            // Setup result screen
+            document.getElementById('resScore').innerText = score;
+            document.getElementById('resCorrect').innerText = correctAnswersCount;
+            const accuracy = Math.round((correctAnswersCount / 10) * 100);
+            document.getElementById('resAccuracy').innerText = `${accuracy}%`;
+
+            let feedback = "🎉 Tuyệt vời! Bạn có phản xạ xuất sắc!";
+            if (accuracy < 50) feedback = "💪 Cố gắng lên! Hãy thử lại để đạt điểm cao hơn nhé!";
+            else if (accuracy >= 80) feedback = "🌟 Siêu đẳng! Bạn chuẩn là Nhanh Như Chớp!";
+            document.getElementById('resultFeedback').innerText = feedback;
+
+            showScreen('screenResult');
+        }
+
+        function showReviewScreen() {
+            playSound('click');
+            const container = document.getElementById('reviewList');
+            container.innerHTML = '';
+
+            currentGameQuestions.forEach((q, idx) => {
+                const isCorrect = q.userAnswer === q.answer;
+                const item = document.createElement('div');
+                item.className = 'review-item';
+                item.style.borderColor = isCorrect ? 'var(--green)' : 'var(--accent-red)';
+
+                const userAnsText = q.userAnswer >= 0 ? q.options[q.userAnswer] : 'Không trả lời (Hết giờ)';
+                const correctAnsText = q.options[q.answer];
+
+                item.innerHTML = `
+                    <div style="font-weight:700; color:var(--text-main); margin-bottom:4px">
+                        Câu ${idx + 1}: ${q.question}
+                    </div>
+                    <div style="font-size:0.85rem; color:${isCorrect ? 'var(--green)' : 'var(--accent-red)'}">
+                        ${isCorrect ? '✔ Đúng' : '✘ Sai'} - Lựa chọn: <b>${userAnsText}</b>
+                    </div>
+                    ${!isCorrect ? `<div style="font-size:0.85rem; color:var(--green)">Đáp án đúng: <b>${correctAnsText}</b></div>` : ''}
+                    <div style="font-size:0.8rem; color:var(--text-sub); margin-top:4px">💡 ${q.explanation}</div>
+                `;
+                container.appendChild(item);
+            });
+
+            showScreen('screenReview');
+        }
+
+        function showLeaderboard() {
+            playSound('click');
+            const lb = JSON.parse(localStorage.getItem('nhanhNhuChop_lb') || '[]');
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            if (lb.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-sub)">Chưa có dữ liệu xếp hạng</td></tr>`;
+            } else {
+                const modeNames = { easy: 'Dễ', medium: 'Trung bình', hard: 'Khó', mix: 'Tổng hợp' };
+                lb.slice(0, 10).forEach((item, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight:700; color:var(--primary-dark)">${index + 1}</td>
+                        <td style="font-weight:600">${item.name}</td>
+                        <td style="font-size:0.8rem">${modeNames[item.mode] || item.mode}</td>
+                        <td style="font-weight:800; color:var(--accent-red)">${item.score}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            showScreen('screenLeaderboard');
+        }
+
+        function clearLeaderboard() {
+            playSound('click');
+            showModal("🗑️ XÓA BẢNG XẾP HẠNG", "Bạn có chắc muốn xóa toàn bộ lịch sử điểm số trên máy này?", [
+                { text: "XÓA TẤT CẢ", class: "btn-cute btn-danger", onclick: "localStorage.removeItem('nhanhNhuChop_lb'); updateHighScoreDisplay(); showLeaderboard(); closeModal();" },
+                { text: "HỦY", class: "btn-cute btn-secondary", onclick: "closeModal()" }
+            ]);
+        }
+
+        // MODAL UTILITY
+        function showModal(title, body, buttons) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = body;
+            const btnContainer = document.getElementById('modalButtons');
+            btnContainer.innerHTML = '';
+
+            buttons.forEach(b => {
+                const button = document.createElement('button');
+                button.className = b.class;
+                button.innerText = b.text;
+                button.setAttribute('onclick', b.onclick);
+                btnContainer.appendChild(button);
+            });
+
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
